@@ -3,6 +3,7 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { CardsMetric } from "../ui/analytic";
 import Link from "next/link";
+import {Button} from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -65,7 +66,7 @@ const data = [
 export default function Overview() {
   return (
     <div className="border-2 rounded-md p-20 m-20">
-        <Link href="/post">Go Back</Link>
+        <Button><Link href="/">Go Back</Link></Button>
       <div className="grid place-items-center pb-10 font-bold">
         <h1 className="text-5xl flex items-center">Analytics Page</h1>
       </div>

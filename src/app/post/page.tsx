@@ -53,7 +53,11 @@ export default function Page() {
 
   return (
     <>
-     <Link href="/">Go Back</Link>
+    <div className="border-2 rounded-md p-20 m-10">
+    <Button><Link href="/">Go Back</Link></Button> 
+    <div className="grid place-items-center pb-10 font-bold">
+    <h1 className="text-5xl flex items-center">GuardAI</h1>
+    </div>
     <form className="flex flex-col items-center justify-between p-24" onSubmit={handleSubmit}>
       {Object.values(formData).map(item => (
         <div key={item.id} className="mb-4 flex items-center">
@@ -77,6 +81,7 @@ export default function Page() {
       ))}
       <Button className="mt-4" type="submit">Start Analyze</Button>
     </form>
+    </div>
     </>
   );
 }
