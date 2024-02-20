@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
-import {CardsMetric} from "../ui/analytic";
+import { CardsMetric } from "../ui/analytic";
 import {
   Card,
   CardContent,
@@ -63,8 +63,11 @@ const data = [
 
 export default function Overview() {
   return (
-    <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="border-2 rounded-md p-20 m-20">
+      <div className="grid place-items-center pb-10 font-bold">
+        <h1 className="text-5xl flex items-center">Analytics Page</h1>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 pb-10">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -110,7 +113,7 @@ export default function Overview() {
           </CardContent>
         </Card>
       </div>
-      <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer width="100%" height={350} className="pb-10">
         <BarChart data={data}>
           <XAxis
             dataKey="name"
@@ -135,6 +138,6 @@ export default function Overview() {
         </BarChart>
       </ResponsiveContainer>
       <CardsMetric />
-    </>
+    </div>
   );
 }
