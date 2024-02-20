@@ -40,6 +40,314 @@ const data = [
     average: 349,
     today: 430,
   },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
+  {
+    average: 400,
+    today: 240,
+  },
+  {
+    average: 300,
+    today: 139,
+  },
+  {
+    average: 200,
+    today: 980,
+  },
+  {
+    average: 278,
+    today: 390,
+  },
+  {
+    average: 189,
+    today: 480,
+  },
+  {
+    average: 239,
+    today: 380,
+  },
+  {
+    average: 349,
+    today: 430,
+  },
 ]
 
 export function CardsMetric() {
@@ -82,14 +390,7 @@ export function CardsMetric() {
                               {payload[0].value}
                             </span>
                           </div>
-                          <div className="flex flex-col">
-                            <span className="text-[0.70rem] uppercase text-muted-foreground">
-                              Today
-                            </span>
-                            <span className="font-bold">
-                              {payload[1].value}
-                            </span>
-                          </div>
+                         
                         </div>
                       </div>
                     )
@@ -103,30 +404,13 @@ export function CardsMetric() {
                 strokeWidth={2}
                 dataKey="average"
                 activeDot={{
-                  r: 6,
+                  r: 20,
                   style: { fill: "var(--theme-primary)", opacity: 0.25 },
                 }}
                 style={
                   {
                     stroke: "var(--theme-primary)",
-                    opacity: 0.25,
-                    "--theme-primary": `hsl(${
-                      theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
-                    })`,
-                  } as React.CSSProperties
-                }
-              />
-              <Line
-                type="monotone"
-                dataKey="today"
-                strokeWidth={2}
-                activeDot={{
-                  r: 8,
-                  style: { fill: "var(--theme-primary)" },
-                }}
-                style={
-                  {
-                    stroke: "var(--theme-primary)",
+                    opacity: 1,
                     "--theme-primary": `hsl(${
                       theme?.cssVars[mode === "dark" ? "dark" : "light"].primary
                     })`,
