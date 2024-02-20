@@ -1,6 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import jsonData from "../../../response_1708399507333.json";
+// import jsonData from "../../../response_1708399507333.json";
+import { useSearchParams } from "next/navigation";
+import { set } from "react-hook-form";
 
 interface Record {
   file_name: string;
@@ -15,8 +19,10 @@ interface ReportViewerProps {
   jsonData: JsonData;
 }
 
-function extract(responseText: string): { cwe: string, content: string, description: string }[] {
-  const cweCodes: { cwe: string, content: string, description: string }[] = [];
+function extract(
+  responseText: string
+): { cwe: string; content: string; description: string }[] {
+  const cweCodes: { cwe: string; content: string; description: string }[] = [];
 
   const regex = /\*\*CWE-(\d+):([^*]+)\*\*\s*\n\n([^*]+)/g;
   let match;
@@ -32,27 +38,69 @@ function extract(responseText: string): { cwe: string, content: string, descript
   return cweCodes;
 }
 
-
-function formatCWEText(cweObjects: { CWE: string, details: string }[]): string {
-  return cweObjects.map(cweObj => `**${cweObj.CWE}:** ${cweObj.details}`).join('\n\n');
+function formatCWEText(cweObjects: { CWE: string; details: string }[]): string {
+  return cweObjects
+    .map((cweObj) => `**${cweObj.CWE}:** ${cweObj.details}`)
+    .join("\n\n");
 }
 
-
 const ReportViewer: React.FC<ReportViewerProps> = () => {
+  const searchParams = useSearchParams();
+  const [loader, setLoader] = React.useState(false);
+  const accessKey = searchParams.get("accessKey");
+  const ownerName = searchParams.get("ownerName");
+  const githubLink = searchParams.get("githubLink");
+  const [jsonData, setJsonData] = React.useState<JsonData>({});
+
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ "access_token":accessKey, "owner":ownerName, "repository":githubLink }), 
+        };
+        setLoader(true);
+        const response = await fetch('https://f87d-103-89-232-66.ngrok-free.app/LLM', requestOptions);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const response_data = await response.json();
+        setJsonData(response_data);
+        console.log(jsonData); 
+        setLoader(false);
+      } catch (error) {
+        console.error('Error posting data:');
+      }
+    };
+
+    postData();
+  }, []);
+
+  console.log(accessKey, ownerName, githubLink);
+  console.log;
   return (
     <div>
-      {Object.entries(jsonData).map(([path, records]) => (
+      {jsonData ? Object.entries(jsonData).map(([path, records]) => (
         <div className="border-2 rounded-lg p-10 m-8" key={path}>
-          <h2 className="text-amber-200">Path:<span className="font-bold ">{path}</span></h2>
+          <h2 className="text-amber-200">
+            Path:<span className="font-bold ">{path}</span>
+          </h2>
           {Array.isArray(records) ? (
             records.map((record, index) => (
               <div className="border-2 rounded-lg box p-8 my-10" key={index}>
-                <h3 className="text-lg font-medium  mb-2 text-green-300">{record.file_name}</h3>
+                <h3 className="text-lg font-medium  mb-2 text-green-300">
+                  {record.file_name}
+                </h3>
                 <div className="response-container py-4 text-red-600">
                   {extract(record.response_text).map((cweObj, idx) => (
                     <div key={idx}>
-                      <p className="font-bold py-4">{cweObj.cwe}:{cweObj.content}</p>
-                      <ReactMarkdown className="text-white">{cweObj.description}</ReactMarkdown>
+                      <p className="font-bold py-4">
+                        {cweObj.cwe}:{cweObj.content}
+                      </p>
+                      <ReactMarkdown className="text-white">
+                        {cweObj.description}
+                      </ReactMarkdown>
                     </div>
                   ))}
                 </div>
@@ -62,11 +110,10 @@ const ReportViewer: React.FC<ReportViewerProps> = () => {
             <p>No records found for this path.</p>
           )}
         </div>
-      ))}
+      )): ""}
+      {loader && <p className="text-amber-200">Loading...</p>}
     </div>
   );
 };
-
-
 
 export default ReportViewer;

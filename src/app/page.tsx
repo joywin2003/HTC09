@@ -20,14 +20,13 @@ export default function Home() {
       for (let i = 0; i <= message.length; i++) {
         setTimeout(() => {
           setText(message.substring(0, i));
-        }, i * 100); // Adjust the delay time (in milliseconds) to control the typing speed
+        }, i * 100);
       }
     };
 
     typingEffect();
 
     return () => {
-      // Clear the timeout to prevent memory leaks
       clearTimeout(typingEffect as any);
     };
   }, []);
@@ -35,7 +34,8 @@ export default function Home() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(formData);
-    router.push('/result');
+    const queryString = new URLSearchParams(formData).toString();
+    router.push(`/result?${queryString}`);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
