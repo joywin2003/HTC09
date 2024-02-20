@@ -1,15 +1,22 @@
-import { useTheme } from "next-themes"
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
+import { useTheme } from "next-themes";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
-import { useConfig } from "@/hooks/use-config"
+import { useConfig } from "@/hooks/use-config";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { themes } from "@/registry/themes"
+} from "@/components/ui/card";
+import { themes } from "@/registry/themes";
 
 const data = [
   {
@@ -348,18 +355,18 @@ const data = [
     average: 349,
     today: 430,
   },
-]
+];
 
 export function CardsMetric() {
-  const { theme: mode } = useTheme()
-  const [config] = useConfig()
+  const { theme: mode } = useTheme();
+  const [config] = useConfig();
 
-  const theme = themes.find((theme) => theme.name === config.theme)
+  const theme = themes.find((theme) => theme.name === config.theme);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Exercise Minutes</CardTitle>
+        <CardTitle>Network usage coverage</CardTitle>
         <CardDescription>
           Your exercise minutes are ahead of where you normally are.
         </CardDescription>
@@ -376,6 +383,8 @@ export function CardsMetric() {
                 bottom: 0,
               }}
             >
+              <XAxis dataKey="today" />
+              <YAxis />
               <Tooltip
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
@@ -390,13 +399,12 @@ export function CardsMetric() {
                               {payload[0].value}
                             </span>
                           </div>
-                         
                         </div>
                       </div>
-                    )
+                    );
                   }
 
-                  return null
+                  return null;
                 }}
               />
               <Line
@@ -422,5 +430,5 @@ export function CardsMetric() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
