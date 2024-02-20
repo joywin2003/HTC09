@@ -101,7 +101,7 @@ export default function Home() {
           placeholder="GitHub Link"
         />
       </div>
-      <Button type="submit">Start Analyze</Button>
+      <Button className="mt-4" type="submit">Start Analyze</Button>
     </form>
     </main>
   );
