@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 interface FormDataItem {
@@ -51,6 +52,8 @@ export default function Page() {
   };
 
   return (
+    <>
+     <Link href="/">Go Back</Link>
     <form className="flex flex-col items-center justify-between p-24" onSubmit={handleSubmit}>
       {Object.values(formData).map(item => (
         <div key={item.id} className="mb-4 flex items-center">
@@ -74,5 +77,6 @@ export default function Page() {
       ))}
       <Button className="mt-4" type="submit">Start Analyze</Button>
     </form>
+    </>
   );
 }
