@@ -5,21 +5,28 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
+
+interface FormDataItem {
+    id: number;
+    key: string;
+    value: string;
+  }
+
 export default function Page() {
-  const [formData, setFormData] = useState([
-    { id: 0, key: "ENDPOINT URL", value: "" },
-    { id: 1, key: "", value: "" },
-    { id: 2, key: "", value: "" },
-    { id: 3, key: "", value: "" },
-  ]);
+    const [formData, setFormData] = useState<{ [key: number]: FormDataItem }>({
+        0: { id: 0, key: "ENDPOINT URL", value: "" },
+        1: { id: 1, key: "", value: "" },
+        2: { id: 2, key: "", value: "" },
+        3: { id: 3, key: "", value: "" },
+      });
 
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formData);
+    console.log(JSON.stringify(formData));
     try {
-      const response = await fetch("/api/post", {
+      const response = await fetch("https://5600-103-89-232-66.ngrok-free.app/GuardAI", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,107 +35,44 @@ export default function Page() {
       });
       const data = await response.json();
       console.log(data);
-    } catch {
-      console.log("error");
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
 
   const handleChange = (id: number, type: string, value: string) => {
-    const updatedFormData = formData.map((item) => {
-      if (item.id === Number(id)) {
-        return { ...item, [type]: value };
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [id]: {
+        ...prevFormData[id],
+        [type]: value
       }
-      return item;
-    });
-    setFormData(updatedFormData);
+    }));
   };
 
   return (
-    <>
-      <form
-        className="flex flex-col items-center justify-between p-24"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-4 flex items-center">
+    <form className="flex flex-col items-center justify-between p-24" onSubmit={handleSubmit}>
+      {Object.values(formData).map(item => (
+        <div key={item.id} className="mb-4 flex items-center">
           <Input
             className="w-50 mr-4"
-            id="key1"
+            id={`key${item.id}`}
             type="text"
-            value={formData[0].key}
-            onChange={(event) => handleChange(1, "key", event.target.value)}
-            placeholder="Key 1"
+            value={item.key}
+            onChange={(event) => handleChange(item.id, 'key', event.target.value)}
+            placeholder={`Key ${item.id}`}
           />
           <Input
             className="w-50"
-            id="value1"
+            id={`value${item.id}`}
             type="text"
-            name="accessKey2"
-            value={formData[0].value}
-            onChange={(event) => handleChange(1, "value", event.target.value)}
-            placeholder="Value 1"
+            value={item.value}
+            onChange={(event) => handleChange(item.id, 'value', event.target.value)}
+            placeholder={`Value ${item.id}`}
           />
         </div>
-        <div className="mb-4 flex items-center">
-          <Input
-            className="w-50 mr-4"
-            id="key2"
-            type="text"
-            value={formData[1].key}
-            onChange={(event) => handleChange(2, "key", event.target.value)}
-            placeholder="Key 2"
-          />
-          <Input
-            className="w-50"
-            id="value2"
-            type="text"
-            name="ownerName"
-            value={formData[1].value}
-            onChange={(event) => handleChange(2, "value", event.target.value)}
-            placeholder="Value 2"
-          />
-        </div>
-        <div className="mb-4 flex items-center">
-          <Input
-            className="w-50 mr-4"
-            id="key3"
-            type="text"
-            name="accessKey4"
-            value={formData[2].key}
-            onChange={(event) => handleChange(3, "key", event.target.value)}
-            placeholder="Key 3"
-          />
-          <Input
-            className="w-50"
-            id="value3"
-            type="text"
-            value={formData[2].value}
-            onChange={(event) => handleChange(3, "value", event.target.value)}
-            placeholder="Value 4"
-          />
-        </div>
-        <div className="mb-4 flex items-center">
-          <Input
-            className="w-50 mr-4"
-            id="key3"
-            type="text"
-            name="accessKey4"
-            value={formData[3].key}
-            onChange={(event) => handleChange(3, "key", event.target.value)}
-            placeholder="Key 4"
-          />
-          <Input
-            className="w-50"
-            id="value3"
-            type="text"
-            value={formData[3].value}
-            onChange={(event) => handleChange(3, "value", event.target.value)}
-            placeholder="Value 4"
-          />
-        </div>
-        <Button className="mt-4" type="submit">
-          Start Analyze
-        </Button>
-      </form>
-    </>
+      ))}
+      <Button className="mt-4" type="submit">Start Analyze</Button>
+    </form>
   );
 }
