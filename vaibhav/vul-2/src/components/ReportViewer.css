@@ -1,0 +1,10 @@
+/* ReportViewer.css */
+.response-container {
+    max-height: 400px; /* Set maximum height */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds max height */
+    padding: 8px; /* Add padding for better visibility */
+    border: 1px solid #ccc; /* Add border for clarity */
+    border-radius: 4px; /* Add border radius for aesthetics */
+    text-align: left;
+  }
+  
