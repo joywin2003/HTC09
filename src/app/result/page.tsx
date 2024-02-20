@@ -73,7 +73,6 @@ const ReportViewer: React.FC<ReportViewerProps> = () => {
           "https://f87d-103-89-232-66.ngrok-free.app/LLM",
           requestOptions
         );
-        
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
