@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 // import jsonData from "../../../response_1708399507333.json";
 import { useSearchParams } from "next/navigation";
 import { set } from "react-hook-form";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Record {
   file_name: string;
@@ -54,74 +55,128 @@ const ReportViewer: React.FC<ReportViewerProps> = () => {
 
   useEffect(() => {
     const postData = async () => {
-      try {        
-        console.log(1)
+      try {
+        console.log(1);
         const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ "access_token": accessKey, "owner": ownerName, "repository": githubLink }),
-          signal: signal
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_token: accessKey,
+            owner: ownerName,
+            repository: githubLink,
+          }),
+          signal: signal,
         };
-  
+
         setLoader(true);
-        const response = await fetch('https://f87d-103-89-232-66.ngrok-free.app/LLM', requestOptions);
-        
+        const response = await fetch(
+          "https://f87d-103-89-232-66.ngrok-free.app/LLM",
+          requestOptions
+        );
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
-  
+
         const response_data = await response.json();
         setJsonData(response_data);
-        console.log(jsonData); 
+        console.log(jsonData);
         setLoader(false);
       } catch (error) {
-        console.error('Error posting data:', error);
+        console.error("Error posting data:", error);
       }
     };
-  
+
     const controller = new AbortController();
     const signal = controller.signal;
-  
+
     postData();
-    
+
     return () => controller.abort();
   }, []);
-  
 
   console.log(accessKey, ownerName, githubLink);
   return (
     <div>
-      {jsonData ? Object.entries(jsonData).map(([path, records]) => (
-        <div className="border-2 rounded-lg p-10 m-8" key={path}>
-          <h2 className="text-amber-200">
-            Path:<span className="font-bold ">{path}</span>
-          </h2>
-          {Array.isArray(records) ? (
-            records.map((record, index) => (
-              <div className="border-2 rounded-lg box p-8 my-10" key={index}>
-                <h3 className="text-lg font-medium  mb-2 text-green-300">
-                  {record.file_name}
-                </h3>
-                <div className="response-container py-4 text-red-600">
-                  {extract(record.response_text).map((cweObj, idx) => (
-                    <div key={idx}>
-                      <p className="font-bold py-4">
-                        {cweObj.cwe}:{cweObj.content}
-                      </p>
-                      <ReactMarkdown className="text-white">
-                        {cweObj.description}
-                      </ReactMarkdown>
+      {jsonData
+        ? Object.entries(jsonData).map(([path, records]) => (
+            <div className="border-2 rounded-lg p-10 m-8" key={path}>
+              <h2 className="text-amber-200">
+                Path:<span className="font-bold ">{path}</span>
+              </h2>
+              {Array.isArray(records) ? (
+                records.map((record, index) => (
+                  <div
+                    className="border-2 rounded-lg box p-8 my-10"
+                    key={index}
+                  >
+                    <h3 className="text-lg font-medium  mb-2 text-green-300">
+                      {record.file_name}
+                    </h3>
+                    <div className="response-container py-4 text-red-600">
+                      {extract(record.response_text).map((cweObj, idx) => (
+                        <div key={idx}>
+                          <p className="font-bold py-4">
+                            {cweObj.cwe}:{cweObj.content}
+                          </p>
+                          <ReactMarkdown className="text-white">
+                            {cweObj.description}
+                          </ReactMarkdown>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))
+              ) : (
+                <p>No records found for this path.</p>
+              )}
+            </div>
+          ))
+        : ""}
+      {loader && (
+        <div
+          className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50"
+          style={{ zIndex: 9999 }}
+        >
+          <div className="flex flex-col items-center space-y-8">
+            <div className="flex items-center space-x-8 ">
+              {/* <Skeleton className="h-24 w-24 rounded-full" /> */}
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-[650px]" />
+                <Skeleton className="h-6 w-[600px]" />
               </div>
-            ))
-          ) : (
-            <p>No records found for this path.</p>
-          )}
+            </div>
+            <div className="flex items-center space-x-8">
+              {/* <Skeleton className="h-24 w-24 rounded-full" /> */}
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-[650px]" />
+                <Skeleton className="h-6 w-[600px]" />
+              </div>
+            </div>
+            <div className="flex items-center space-x-8">
+              {/* <Skeleton className="h-24 w-24 rounded-full" /> */}
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-[650px]" />
+                <Skeleton className="h-6 w-[600px]" />
+              </div>
+            </div>
+            <div className="flex items-center space-x-8">
+              {/* <Skeleton className="h-24 w-24 rounded-full" /> */}
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-[650px]" />
+                <Skeleton className="h-6 w-[600px]" />
+              </div>
+            </div>
+            <div className="flex items-center space-x-8">
+              {/* <Skeleton className="h-24 w-24 rounded-full" /> */}
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-[650px]" />
+                <Skeleton className="h-6 w-[600px]" />
+              </div>
+            </div>
+          </div>
         </div>
-      )): ""}
-      {loader && <p className="text-amber-200">Loading...</p>}
+      )}
     </div>
   );
 };
