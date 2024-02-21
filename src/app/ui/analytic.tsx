@@ -1,3 +1,5 @@
+"use client";
+
 import { useTheme } from "next-themes";
 import {
   Line,
@@ -17,75 +19,62 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { themes } from "@/registry/themes";
+import { useState, useEffect } from "react";
+import { set } from "react-hook-form";
 
-const data = [
-  { average: 400, today: 0 },
-  { average: 300, today: 1 },
-  { average: 200, today: 2 },
-  { average: 278, today: 3 },
-  { average: 189, today: 4 },
-  { average: 239, today: 5 },
-  { average: 349, today: 6 },
-  { average: 400, today: 7 },
-  { average: 300, today: 8 },
-  { average: 200, today: 9 },
-  { average: 278, today: 10 },
-  { average: 189, today: 11 },
-  { average: 239, today: 12 },
-  { average: 349, today: 13 },
-  { average: 400, today: 14 },
-  { average: 300, today: 15 },
-  { average: 200, today: 16 },
-  { average: 278, today: 17 },
-  { average: 189, today: 18 },
-  { average: 239, today: 19 },
-  { average: 349, today: 20 },
-  { average: 400, today: 21 },
-  { average: 300, today: 22 },
-  { average: 200, today: 23 },
-  { average: 278, today: 24 },
-  { average: 189, today: 25 },
-  { average: 200, today: 26 },
-  { average: 278, today: 27 },
-  { average: 189, today: 28 },
-  { average: 239, today: 29 },
-  { average: 349, today: 30 },
-  { average: 400, today: 31 },
-  { average: 300, today: 32 },
-  { average: 200, today: 33 },
-  { average: 278, today: 34 },
-  { average: 189, today: 35 },
-  { average: 239, today: 36 },
-  { average: 349, today: 37 },
-  { average: 400, today: 38 },
-  { average: 300, today: 39 },
-  { average: 200, today: 40 },
-  { average: 278, today: 41 },
-  { average: 189, today: 42 },
-  { average: 239, today: 43 },
-  { average: 349, today: 44 },
-  { average: 400, today: 45 },
-  { average: 300, today: 46 },
-  { average: 200, today: 47 },
-  { average: 278, today: 48 },
-  { average: 189, today: 49 },
-  { average: 239, today: 50 },
-  { average: 349, today: 51 },
-  { average: 400, today: 52 },
-  { average: 300, today: 53 },
-  { average: 200, today: 54 },
-  { average: 278, today: 55 },
-  { average: 189, today: 56 },
-  { average: 239, today: 57 },
-  { average: 349, today: 58 },
-  { average: 400, today: 59 },
-];
 
+// interface DataItem {
+//     time: string;
+//     value: number;
+//   }
+  
 export function CardsMetric() {
   const { theme: mode } = useTheme();
   const [config] = useConfig();
-
+  const [data, setData] = useState([
+  ]);
+    // let data: DataItem[] = [];
   const theme = themes.find((theme) => theme.name === config.theme);
+
+  // Define fetchData function
+  useEffect(() => {
+    const postData = async () => {
+      try {
+        console.log(1);
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: signal,
+        };
+
+        const response = await fetch(
+          "https://6328-103-89-232-66.ngrok-free.app/net",
+          requestOptions
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const response_data = await response.json();
+        console.log(response_data["value"]);
+        setData(response_data["value"]);
+        console.log(typeof data);
+        console.log(0, data);
+        console.log(typeof data);
+        console.log(1, data);
+      } catch (error) {
+        console.error("Error posting data:", error);
+      }
+    };
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    postData();
+
+    return () => controller.abort();
+  }, [data]);
 
   return (
     <Card>
@@ -107,12 +96,7 @@ export function CardsMetric() {
                 bottom: 0,
               }}
             >
-              <XAxis
-                dataKey="today"
-                interval="preserveStartEnd" // Keeps the first and last tick
-                tickCount={10}
-                tickFormatter={(value) => value}
-              />
+              <XAxis dataKey="time" />
               <YAxis />
               <Tooltip
                 content={({ active, payload }) => {
@@ -139,7 +123,7 @@ export function CardsMetric() {
               <Line
                 type="monotone"
                 strokeWidth={2}
-                dataKey="average"
+                dataKey="value"
                 activeDot={{
                   r: 20,
                   style: { fill: "var(--theme-primary)", opacity: 0.25 },

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
 
 
 interface FormDataItem {
@@ -50,7 +51,6 @@ export default function Page() {
       }
     }));
   };
-
   return (
     <>
     <div className="border-2 rounded-md p-20 m-10">
