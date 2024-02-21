@@ -20,7 +20,7 @@ export default function Overview() {
     <div className="border-2 rounded-md p-20 m-20">
         <Button><Link href="/">Go Back</Link></Button>
       <div className="grid place-items-center pb-10 font-bold">
-        <h1 className="text-5xl flex items-center">Analytics Page</h1>
+        <h1 className="text-5xl flex items-center">Network Coverage</h1>
       </div>
       {/* <ResponsiveContainer width="100%" height={350} className="pb-10">
         <BarChart data={data}>

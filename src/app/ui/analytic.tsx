@@ -48,7 +48,7 @@ export function CardsMetric() {
         };
 
         const response = await fetch(
-          "https://5231-103-89-232-66.ngrok-free.app/net",
+          "https://ab85-103-89-232-66.ngrok-free.app/net",
           requestOptions
         );
 

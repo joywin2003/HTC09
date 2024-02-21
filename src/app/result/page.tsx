@@ -70,7 +70,7 @@ const ReportViewer: React.FC<ReportViewerProps> = () => {
 
         setLoader(true);
         const response = await fetch(
-          "https://1788-103-89-232-66.ngrok-free.app/LLM",
+          "https://a1de-103-89-232-66.ngrok-free.app/LLM",
           requestOptions
         );
 
