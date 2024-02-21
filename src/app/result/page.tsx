@@ -105,31 +105,18 @@ const ReportViewer: React.FC<ReportViewerProps> = () => {
                 Path:<span className="font-bold ">{path}</span>
               </h2>
               {Array.isArray(records) ? (
-                records.map((record, index) => (
-                  <div
-                    className="border-2 rounded-lg box p-8 my-10"
-                    key={index}
-                  >
-                    <h3 className="text-lg font-medium  mb-2 text-green-300">
-                      {record.file_name}
-                    </h3>
-                    <div className="response-container py-4 text-red-600">
-                      {extract(record.response_text).map((cweObj, idx) => (
-                        <div key={idx}>
-                          <p className="font-bold py-4">
-                            {cweObj.cwe}:{cweObj.content}
-                          </p>
-                          <ReactMarkdown className="text-white">
-                            {cweObj.description}
-                          </ReactMarkdown>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p>No records found for this path.</p>
-              )}
+            records.map((record, index) => (
+              <div className="box" key={index}>
+                <h3>{record.file_name}</h3>
+                {/* Wrap response_text in a separate div with overflow styling */}
+                <div className="response-container">
+                  <ReactMarkdown children={record.response_text} />
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No records found for this path.</p>
+          )}
             </div>
           ))
         : ""}
